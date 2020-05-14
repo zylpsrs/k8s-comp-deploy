@@ -1,0 +1,17 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDataSource
+metadata:
+  name: prom-grafanadatasource
+spec:
+  name: prom-datasources.yaml
+  datasources:
+  - name: Prometheus
+    type: prometheus
+    url: http://prometheus-prom:9090
+    access: proxy
+    editable: true
+    isDefault: true
+    jsonData:
+      tlsSkipVerify: true
+      timeInterval: 5s
+    version: 1

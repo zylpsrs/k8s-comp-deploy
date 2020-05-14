@@ -1,0 +1,32 @@
+apiVersion: maistra.io/v1
+kind: ServiceMeshControlPlane
+metadata:
+  name: basic-install
+  namespace: istio-system
+spec:
+  istio:
+    gateways:
+      istio-egressgateway:
+        autoscaleEnabled: false
+      istio-ingressgateway:
+        autoscaleEnabled: false
+    grafana:
+      enabled: true
+    kiali:
+      enabled: true
+      dashboard:
+        viewOnlyMode: false
+        jaegerURL: "https://jaeger-istio-system.apps.ocp.zyl.io"
+        grafanaURL: "https://grafana-istio-system.apps.ocp.zyl.io"
+    mixer:
+      policy:
+        autoscaleEnabled: false
+      telemetry:
+        autoscaleEnabled: false
+    pilot:
+      autoscaleEnabled: false
+      traceSampling: 100
+    tracing:
+      enabled: true
+      jaeger:
+        template: all-in-one

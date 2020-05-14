@@ -1,0 +1,776 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    app: grafana
+  name: hello-app-dashboard
+spec:
+  name: hello_app_dashboard.json
+  json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 1,
+      "iteration": 1586760168380,
+      "links": [],
+      "panels": [
+        {
+          "collapsed": true,
+          "datasource": null,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 8,
+          "panels": [
+            {
+              "aliasColors": {},
+              "bars": false,
+              "cacheTimeout": null,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "description": "",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 1
+              },
+              "hiddenSeries": false,
+              "id": 2,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "links": [],
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job) (error:flask_http_request_count:rate1m{namespace=\"$namespace\"})",
+                  "format": "time_series",
+                  "instant": false,
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}",
+                  "refId": "A"
+                },
+                {
+                  "expr": "sum by (job) (success:flask_http_request_count:rate1m{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}",
+                  "refId": "B"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "flask http request count per second",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            },
+            {
+              "aliasColors": {},
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "description": "",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 1
+              },
+              "hiddenSeries": false,
+              "id": 4,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job) (total:flask_http_request_count:inc1m{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "flask http request count per min",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            },
+            {
+              "aliasColors": {},
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "description": "",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 9
+              },
+              "hiddenSeries": false,
+              "id": 9,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job) (avg:success:flask_http_request_time:rate1m{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "avg success http request time(sec)",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            },
+            {
+              "aliasColors": {},
+              "bars": false,
+              "cacheTimeout": null,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 9
+              },
+              "hiddenSeries": false,
+              "id": 11,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "links": [],
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pluginVersion": "6.5.1",
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job,pod) (success:percent:flask_http_request_time_le_025:inc1m{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}: {{pod}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "success percent http request time le 0.25s",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "percentunit",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            },
+            {
+              "aliasColors": {},
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 17
+              },
+              "hiddenSeries": false,
+              "id": 13,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job,pod) (success:quantile:90:flask_http_request_time{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}: {{pod}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "90% success http request time le (s)",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            }
+          ],
+          "title": "http request",
+          "type": "row"
+        },
+        {
+          "collapsed": true,
+          "datasource": null,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 15,
+          "panels": [
+            {
+              "aliasColors": {},
+              "bars": false,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 2
+              },
+              "hiddenSeries": false,
+              "id": 18,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job,pod) (job:process_cpu_utilisation:rate1m{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}: {{pod}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "process cpu utilisation",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "percentunit",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            },
+            {
+              "aliasColors": {},
+              "bars": false,
+              "cacheTimeout": null,
+              "dashLength": 10,
+              "dashes": false,
+              "datasource": "$datasource",
+              "fill": 1,
+              "fillGradient": 0,
+              "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 2
+              },
+              "hiddenSeries": false,
+              "id": 20,
+              "legend": {
+                "avg": false,
+                "current": false,
+                "max": false,
+                "min": false,
+                "show": false,
+                "total": false,
+                "values": false
+              },
+              "lines": true,
+              "linewidth": 1,
+              "links": [],
+              "nullPointMode": "null",
+              "options": {
+                "dataLinks": []
+              },
+              "percentage": false,
+              "pluginVersion": "6.5.1",
+              "pointradius": 2,
+              "points": false,
+              "renderer": "flot",
+              "seriesOverrides": [],
+              "spaceLength": 10,
+              "stack": false,
+              "steppedLine": false,
+              "targets": [
+                {
+                  "expr": "sum by (job,pod) (process_resident_memory_bytes{namespace=\"$namespace\"})",
+                  "intervalFactor": 10,
+                  "legendFormat": "{{job}}: {{pod}}",
+                  "refId": "A"
+                }
+              ],
+              "thresholds": [],
+              "timeFrom": null,
+              "timeRegions": [],
+              "timeShift": null,
+              "title": "process resident memory bytes",
+              "tooltip": {
+                "shared": true,
+                "sort": 0,
+                "value_type": "individual"
+              },
+              "transparent": true,
+              "type": "graph",
+              "xaxis": {
+                "buckets": null,
+                "mode": "time",
+                "name": null,
+                "show": true,
+                "values": []
+              },
+              "yaxes": [
+                {
+                  "format": "bytes",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": true
+                },
+                {
+                  "format": "short",
+                  "label": null,
+                  "logBase": 1,
+                  "max": null,
+                  "min": null,
+                  "show": false
+                }
+              ],
+              "yaxis": {
+                "align": false,
+                "alignLevel": null
+              }
+            }
+          ],
+          "title": "cpu and memory",
+          "type": "row"
+        }
+      ],
+      "refresh": false,
+      "schemaVersion": 21,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "text": "Prometheus",
+              "value": "Prometheus"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "datasource",
+            "options": [],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
+          },
+          {
+            "allValue": null,
+            "current": {
+              "text": "hello",
+              "value": "hello"
+            },
+            "datasource": "$datasource",
+            "definition": "label_values(flask_exporter_info{namespace!=''}, namespace)",
+            "hide": 0,
+            "includeAll": false,
+            "label": null,
+            "multi": false,
+            "name": "namespace",
+            "options": [],
+            "query": "label_values(flask_exporter_info{namespace!=''}, namespace)",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "tagValuesQuery": "",
+            "tags": [],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+          }
+        ]
+      },
+      "time": {
+        "from": "now-30m",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ]
+      },
+      "timezone": "",
+      "title": "Hello App Dashboard",
+      "uid": "81nqJujWz",
+      "version": 6
+    }

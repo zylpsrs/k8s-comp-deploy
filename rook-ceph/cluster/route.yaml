@@ -1,0 +1,27 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rook-ceph-mgr
+    app.kubernetes.io/instance: rook-ceph
+    rook_cluster: rook-ceph
+  name: rook-ceph-mgr-dashboard
+  selfLink: /apis/route.openshift.io/v1/namespaces/rook-ceph/routes/rook-ceph-mgr-dashboard
+spec:
+  host: rook-dashboard.apps.ocp.zyl.io
+  port:
+    targetPort: https-dashboard
+  subdomain: ""
+  tls:
+    termination: passthrough
+  to:
+    kind: Service
+    name: rook-ceph-mgr-dashboard
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+    - conditions:
+        - status: 'True'
+          type: Admitted

@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus-prom
+spec:
+  host: prom-monitoring.apps.ocp.zyl.io
+  port:
+    targetPort: web
+  subdomain: ""
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: prometheus-operated
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - status: "True"
+      type: Admitted

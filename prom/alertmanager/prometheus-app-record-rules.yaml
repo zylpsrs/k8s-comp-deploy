@@ -1,0 +1,57 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-app-record-rules
+spec:
+  groups:
+  - name: app-record.rules
+    rules:
+    # 每秒钟有多少个错误请求,新的指标将保留job,status,namespace,path，故我们可再次过滤指标
+    - expr: |
+        sum(rate(flask_http_request_duration_seconds_count{status!="200"}[1m]))
+          by (job,status,namespace,path)
+      record: error:flask_http_request_count:rate1m
+    
+    # 每秒钟有多少个成功请求
+    - expr: |
+        sum(rate(flask_http_request_duration_seconds_count{status="200"}[1m]))
+          by (status,job,namespace,path)
+      record: success:flask_http_request_count:rate1m
+
+    # 每分钟任务总的请求数，含错误与成功请求
+    - expr: sum(increase(flask_http_request_total[1m])) by (status,job,namespace)
+      record: total:flask_http_request_count:inc1m
+
+    # 成功请求的平均响应时间  
+    - expr: |
+        rate(flask_http_request_duration_seconds_sum{status="200"}[1m])
+        /
+        rate(flask_http_request_duration_seconds_count{status="200"}[1m])
+      record: avg:success:flask_http_request_time:rate1m
+    
+    # 每分钟有多少个成功请求其响应时间小于0.25s
+    - expr: increase(flask_http_request_duration_seconds_bucket{status="200",le="0.25"}[1m])
+      record: success:flask_http_request_time_le_025:inc1m
+    
+    # 每分钟总的成功数量
+    - expr: increase(flask_http_request_duration_seconds_count{status="200"}[1m])
+      record: success:flask_http_request_time_count:inc1m
+    
+    # 1分钟内成功请求响应时间小于0.25秒的比重
+    # 注意，ignoring (le)使得再除法师忽略前者指标中的le标签，这样前者才能与后者匹配上
+    #  success:flask_http_request_time_le_025:inc1m 指标比
+    #  success:flask_http_request_time_count:inc1m 多了le指标
+    - expr: |
+        success:flask_http_request_time_le_025:inc1m
+        / ignoring (le) success:flask_http_request_time_count:inc1m
+      record: success:percent:flask_http_request_time_le_025:inc1m
+      
+    # 这里计算成功响应的分位数，即90%请求时间小于多少s
+    - expr: |
+        histogram_quantile(0.9,
+          rate(flask_http_request_duration_seconds_bucket{status="200"}[1m]))
+      record: success:quantile:90:flask_http_request_time
+      
+    # 进程CPU使用率，由Prometheus client library自动提供的指标
+    - expr: rate(process_cpu_seconds_total[1m])
+      record: job:process_cpu_utilisation:rate1m

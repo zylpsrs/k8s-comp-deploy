@@ -1,0 +1,54 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-app-alert-rules
+spec:
+  groups:
+  # 这里配置通用规则，争对集群所有对象
+  - name: general-alert.rules
+    rules:
+    # 若目标持续1分钟异常则告警，严重程度为warning
+    - alert: TargetDown
+      annotations:
+        # $value：计算时序结果值；
+        # $labels引用标签，这里$labels.job引用时序指标中的标签
+        message: "{{ $value }}% of the {{ $labels.job }} targets are down."
+      expr: |
+        100 * (count(up{namespace != ''} == 0) BY (job, namespace, service) 
+        / count(up{namespace != ''}) BY (job, namespace, service)) 
+        > 10
+      for: 1m
+      labels:
+        severity: warning
+        
+    # 若目标所有replicat持续异常1分钟则告警，严重程度为critical
+    - alert: AppDown
+      annotations:
+        message: "app {{ $labels.job }} in {{ $labels.namespace}} namespace is down"
+      expr: sum by (job,namespace) (up{namespace != ''}) == 0
+      for: 1m
+      labels:
+        severity: critical
+
+  # 这里针对示例app，如下定义了两个告警规则：
+  #    90%响应时间延迟0.5s，若持续2分钟，则告警，其严重程度为warning
+  #    90%响应时间延迟0.5s，若持续10分钟，则告警，其严重程度为critical
+  - name: app-alert.rules
+    rules:
+    - alert: AppLatencyHigh
+      annotations:
+        message: "The App has a 90th percentile latency of {{ $value }} seconds 
+          for {{ $labels.method }} {{ $labels.path }}"
+      expr: success:quantile:90:flask_http_request_time > 0.5
+      for: 2m
+      labels:
+        severity: warning
+
+    - alert: AppLatencyHigh
+      annotations:
+        message: "The App has a 90th percentile latency of {{ $value }} seconds 
+          for {{ $labels.method }} {{ $labels.path }}"
+      expr: success:quantile:90:flask_http_request_time > 0.5
+      for: 10m
+      labels:
+        severity: critical

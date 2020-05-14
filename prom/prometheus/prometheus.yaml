@@ -1,0 +1,29 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prom
+spec:
+  alerting:
+    alertmanagers:
+    - name: alertmanager-main
+      namespace: monitoring
+      port: web
+  externalUrl: https://prom-monitoring.apps.ocp.zyl.io
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  ruleSelector: {}
+  ruleNamespaceSelector: {}
+  podMonitorSelector: {}
+  serviceMonitorSelector: {}
+  serviceMonitorNamespaceSelector: {}
+  serviceAccountName: prometheus
+  additionalScrapeConfigs:
+    name: additional-scrape-configs
+    key: prometheus-additional.yaml
+  storage:
+    volumeClaimTemplate:
+      spec:
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: nfs-client

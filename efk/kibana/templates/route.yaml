@@ -1,0 +1,27 @@
+{{- $fullName := include "kibana.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+{{- $ingressPath := .Values.ingress.path -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ $fullName }}
+spec:
+  host: {{ $fullName }}.apps.ocp.zyl.io
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: {{ $fullName }}
+    weight: 100
+status:
+  ingress: 
+    - conditions:
+      - status: "True"
+        type: Admitted
